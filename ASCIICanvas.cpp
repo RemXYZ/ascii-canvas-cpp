@@ -1,26 +1,31 @@
 #include "Canvas.h"
 #include "ASCIICanvas.h"
+#include <fstream>
 // #include "Figures/Figures.h"
 
 
 void clearScreen();
 using namespace std;
 
-ASCIICanvas::ASCIICanvas(int widthArg, int heightArg, char bgSymbolArg) {
+ASCIICanvas::ASCIICanvas(int widthArg, int heightArg, char bgSymbolArg, const std::string& output) {
     this->bgSymbol = bgSymbolArg;
     this->width = widthArg;
     this->height = heightArg;
     this->canvas.resize(height, std::vector<char>(width, bgSymbolArg));
+    outfile.open(output);
+    if (!outfile) {
+        // Rzucanie wyjątku, jeśli otwarcie pliku się nie powiedzie
+        throw std::runtime_error("Nie udało się otworzyć pliku " + output);
+    }
 }
 
 void ASCIICanvas::draw() {
-    
+
     clearScreen();
     drawFrame();
     // for (const auto& figure : figures) {
     //     figure->draw(*this);
     // }
-
     for (int i = 0; i < this->height; ++i) {
         std::cout << '|';
         for (int j = 0; j < this->width; ++j) {
@@ -29,7 +34,16 @@ void ASCIICanvas::draw() {
         std::cout << "|\n";
     }
 
+    for (int i = 0; i < this->height; ++i) {
+        outfile << '|';
+        for (int j = 0; j < this->width; ++j) {
+            outfile << this->canvas[i][j];
+        }
+        outfile << "|\n";
+    }
+
     drawFrame();
+     
 }
 
 // void ASCIICanvas::addFigure(std::shared_ptr<Figure> fig) {
@@ -52,6 +66,12 @@ void ASCIICanvas::drawFrame() {
         std::cout << '=';
     }
     std::cout << "|\n";
+
+    outfile << '|';
+    for (int i = 0; i < this->width; ++i) {
+        outfile << '=';
+    }
+    outfile << "|\n";
 }
 
 
@@ -59,3 +79,8 @@ void ASCIICanvas::setDimension(int widthArg, int heightArg) {
     this->width = widthArg;
     this->height = heightArg;
 };
+
+
+ASCIICanvas::~ASCIICanvas (){
+    outfile.close();
+}

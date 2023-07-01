@@ -12,7 +12,7 @@
 
 #ifdef _WIN32
     void clearScreen() {
-        // system("cls");
+        system("cls");
         cout << "\n";
     }
 #else
@@ -65,7 +65,8 @@ int main(int argc, char *argv[]) {
     // std::cout << " Conf size: " << canvasHeight << " " << canvasWidgth << " out: " << canvasOutPut << " char:"<< bgChar<<";" << std::endl;
 
 
-    ASCIICanvas canvas(canvasWidgth, canvasHeight, bgChar);
+    ASCIICanvas canvas(canvasWidgth, canvasHeight, bgChar, canvasOutPut);
+    canvas.setOutputFile(canvasOutPut);
     // canvas.draw();
     
 
@@ -99,11 +100,12 @@ int main(int argc, char *argv[]) {
     ShapeParser shapeParser(canvasShapesRaw);
     const std::vector<std::unique_ptr<Figure>>& shapes = shapeParser.getShapes();
     for (auto& shape: shapes){
-        shape->hello();
+        // shape->hello();
         shape->draw(canvas);
     }
 
     canvas.draw();
+    cout << "Image saved in: " << canvasOutPut;
 
     // Należy zaimplementować metode wczytującą plik konfiguracyjny
     // i na jego podstawie tworzyć obiekt canvas i listę figur
