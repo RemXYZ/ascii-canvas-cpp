@@ -1,4 +1,5 @@
 #include "../ASCIICanvas.h"
+#include <cmath>
 
 using namespace std;
 #ifndef FIGURE_H
@@ -7,9 +8,14 @@ class Figure {
 public:
     virtual ~Figure() = default;
     virtual void draw(ASCIICanvas &c) = 0;
-    virtual void setSymbol(char symbol) = 0;
+    virtual void setSymbol(char symbol) {
+        this->symbol = symbol;
+    }
+    virtual void hello() {
+        cout << "This is Figure" << endl;
+    }
 protected:
-    char symbol;
+    char symbol = '#';
 };
 #endif
 
@@ -28,16 +34,17 @@ public:
                 canvas.setPixel(j, i, symbol);
             }
         }
-        canvas.draw();
+        // canvas.draw();
+    }
+
+    void hello()override {
+        cout << "This is Rectangle" << endl;
     }
     
-    void setSymbol(char symbol) override {
-        this->symbol = symbol;
-    }
+    
 
 private:
     int x, y, width, height;
-    char symbol;
 };
 #endif
 
@@ -46,15 +53,25 @@ private:
 class Square : public Rectangle {
 public:
     Square(int x, int y, int size) :Rectangle(x, y, size, size) {}
-    void draw(ASCIICanvas &c) override {
-        // Metoda do narysowania kwadratu
-    }
-    void setSymbol(char symbol) override {
-        this->symbol = symbol;
+    void hello() override {
+        cout << "This is Square" << endl;
     }
 private:
     int x, y, size;
-    char symbol;
+};
+#endif
+
+
+#ifndef PIXEL_H
+#define PIXEL_H
+class Pixel : public Square {
+public:
+    Pixel(int x, int y) : Square(x, y, 1) {}
+    void hello() override {
+        cout << "This is Pixel" << endl;
+    }
+private:
+    int x, y, size;
 };
 #endif
 
@@ -65,10 +82,20 @@ class Triangle : public Figure {
 public:
     Triangle(int x, int y, int base, int height) : x(x), y(y), base(base), height(height) {}
     void draw(ASCIICanvas &c) override {
-        // Metoda do narysowania trójkąta
-    }
-    void setSymbol(char symbol) override {
-        this->symbol = symbol;
+        int halfBase = base / 2;
+
+        // Rysowanie trójkąta
+        for (int i = 0; i < height; i++) {
+            int start = x - i;
+            int end = x + i;
+
+            // Aby rysować trójkąt w dół, trzeba zacząć od "góry"
+            int currentY = y - halfBase + i;
+
+            for (int j = start; j <= end; j++) {
+                c.setPixel(j, currentY, symbol);
+            }
+        }
     }
 private:
     int x, y, base, height;
@@ -82,10 +109,13 @@ class Circle : public Figure {
 public:
     Circle(int x, int y, int radius) : x(x), y(y), radius(radius) {}
     void draw(ASCIICanvas &c) override {
-        // Metoda do narysowania koła
-    }
-    void setSymbol(char symbol) override {
-        this->symbol = symbol;
+        for (int i = x - radius; i <= x + radius; i++) {
+            for (int j = y - radius; j <= y + radius; j++) {
+                if (std::pow(i - x, 2) + std::pow(j - y, 2) <= std::pow(radius, 2)) {
+                    c.setPixel(i, j, symbol);
+                }
+            }
+        }
     }
 private:
     int x, y, radius;

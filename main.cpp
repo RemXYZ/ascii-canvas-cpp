@@ -2,6 +2,9 @@
 #include "Canvas.h"
 #include "ASCIICanvas.h"
 #include "ConfReader.h"
+#include "ShapeParser.h"
+
+
 #include <filesystem>
 #include <iostream>
 #include <string>
@@ -9,7 +12,7 @@
 
 #ifdef _WIN32
     void clearScreen() {
-        system("cls");
+        // system("cls");
         cout << "\n";
     }
 #else
@@ -29,11 +32,13 @@ void tokenize(std::string& s, std::string& del)
 }
 
 
+void shapeLauncher(std::vector<std::unique_ptr<Figure>>) {
+
+}
+
 
 
 int main(int argc, char *argv[]) {
-    
-    std::cout << "Ok" << std::endl;
 
     // READING THE FILE
     std::string fileName;
@@ -61,15 +66,44 @@ int main(int argc, char *argv[]) {
 
 
     ASCIICanvas canvas(canvasWidgth, canvasHeight, bgChar);
-    canvas.draw();
+    // canvas.draw();
     
-    Rectangle rectangle(1, 2, 1, 2);
-    rectangle.setSymbol('#');
-    rectangle.draw(canvas);
 
-    Rectangle rectangle2(3, 3, 2, 2);
-    rectangle2.setSymbol('#');
-    rectangle2.draw(canvas);
+    // Triangle triangle(5,5,4,4);
+    // triangle.setSymbol('#');
+    // triangle.draw(canvas);
+
+    // Square rectangle(1, 2, 2);
+    // rectangle.setSymbol('#');
+    // rectangle.draw(canvas);
+
+
+    // Pixel pixel(10, 10);
+    // pixel.setSymbol('@');
+    // pixel.draw(canvas);
+
+    // Pixel pixel2(6, 6);
+    // pixel2.draw(canvas);
+
+    // Rectangle rectangle2(3, 3, 2, 2);
+    // rectangle2.setSymbol('#');
+    // rectangle2.draw(canvas);
+
+    // Figure *hello = nullptr;
+
+    // hello = new Rectangle(1,1,2,2);
+    // hello->setSymbol('@');
+    // hello->draw(canvas);
+
+
+    ShapeParser shapeParser(canvasShapesRaw);
+    const std::vector<std::unique_ptr<Figure>>& shapes = shapeParser.getShapes();
+    for (auto& shape: shapes){
+        shape->hello();
+        shape->draw(canvas);
+    }
+
+    canvas.draw();
 
     // Należy zaimplementować metode wczytującą plik konfiguracyjny
     // i na jego podstawie tworzyć obiekt canvas i listę figur

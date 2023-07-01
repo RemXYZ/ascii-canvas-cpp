@@ -15,7 +15,7 @@ public:
     void setDimension(int widthArg, int heightArg) override;
     void draw() override;
     // void addFigure(std::shared_ptr<Figure> fig) override;
-    void setPixel(int x, int y, char c);
+    int setPixel(int x, int y, char c);
 
 private:
     std::vector<std::vector<char>> canvas;

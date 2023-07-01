@@ -8,7 +8,10 @@
 #include <iostream>
 #include <regex>
 
-
+#include <map>
+#include <memory>
+#include <functional>
+#include "Figures/Figures.h"
 
 
 class ConfReader {
@@ -32,7 +35,7 @@ public:
             
             // Size of canvas
             if (word == "CANVAS") {
-                iss >> canvasHeight >> canvasWidth;
+                iss >> canvasWidth >> canvasHeight;
                 // Sprawdzenie, czy przypisanie do zmiennych powiodło się i wartości są większe od 0
                 if (iss.fail() || canvasHeight <= 0 || canvasWidth <= 0) {
                     std::cerr << "Invalid canvas dimensions\n";
@@ -103,51 +106,48 @@ public:
 
 #endif
 
-// #include <map>
-// #include <memory>
-// #include <functional>
+
 
 // std::vector<std::unique_ptr<Figure>> parseShapes(const std::vector<std::string>& shapes) {
 //     std::vector<std::unique_ptr<Figure>> result;
-
-//     // Ustalamy mapę funkcji tworzących obiekty poszczególnych klas
-//     std::map<std::string, std::function<std::unique_ptr<Figure>(std::istringstream&)>> shapeFactories;
-//     shapeFactories["Square"] = [](std::istringstream& iss) {
-//         int x, y, side;
-//         char symbol;
-//         iss >> x >> y >> side >> symbol;
-//         return std::make_unique<Square>(x, y, side, symbol);
-//     };
-//     shapeFactories["Circle"] = [](std::istringstream& iss) {
-//         int x, y, radius;
-//         char symbol;
-//         iss >> x >> y >> radius >> symbol;
-//         return std::make_unique<Circle>(x, y, radius, symbol);
-//     };
 //     shapeFactories["Rectangle"] = [](std::istringstream& iss) {
 //         int x, y, width, height;
 //         char symbol;
 //         iss >> x >> y >> width >> height >> symbol;
 //         return std::make_unique<Rectangle>(x, y, width, height, symbol);
 //     };
-//     shapeFactories["Triangle"] = [](std::istringstream& iss) {
-//         int x, y, base, height;
-//         char symbol;
-//         iss >> x >> y >> base >> height >> symbol;
-//         return std::make_unique<Triangle>(x, y, base, height, symbol);
-//     };
+    // // Ustalamy mapę funkcji tworzących obiekty poszczególnych klas
+    // std::map<std::string, std::function<std::unique_ptr<Figure>(std::istringstream&)>> shapeFactories;
+    // shapeFactories["Square"] = [](std::istringstream& iss) {
+    //     int x, y, side;
+    //     char symbol;
+    //     iss >> x >> y >> side >> symbol;
+    //     return std::make_unique<Square>(x, y, side, symbol);
+    // };
+    // shapeFactories["Circle"] = [](std::istringstream& iss) {
+    //     int x, y, radius;
+    //     char symbol;
+    //     iss >> x >> y >> radius >> symbol;
+    //     return std::make_unique<Circle>(x, y, radius, symbol);
+    // };
+    // shapeFactories["Triangle"] = [](std::istringstream& iss) {
+    //     int x, y, base, height;
+    //     char symbol;
+    //     iss >> x >> y >> base >> height >> symbol;
+    //     return std::make_unique<Triangle>(x, y, base, height, symbol);
+    // };
 
-//     // Przechodzimy przez wszystkie linie w "shapes" i tworzymy obiekty figur
-//     for (const auto& shape : shapes) {
-//         std::istringstream iss(shape);
-//         std::string shapeType;
-//         iss >> shapeType;
-//         if (shapeFactories.count(shapeType) > 0) {
-//             result.push_back(shapeFactories[shapeType](iss));
-//         } else {
-//             std::cout << "Unrecognized shape type: " << shapeType << std::endl;
-//         }
-//     }
+    // // Przechodzimy przez wszystkie linie w "shapes" i tworzymy obiekty figur
+    // for (const auto& shape : shapes) {
+    //     std::istringstream iss(shape);
+    //     std::string shapeType;
+    //     iss >> shapeType;
+    //     if (shapeFactories.count(shapeType) > 0) {
+    //         result.push_back(shapeFactories[shapeType](iss));
+    //     } else {
+    //         std::cout << "Unrecognized shape type: " << shapeType << std::endl;
+    //     }
+    // }
 
 //     return result;
 // }
