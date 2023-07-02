@@ -3,6 +3,7 @@
 #include "ASCIICanvas.h"
 #include "ConfReader.h"
 #include "ShapeParser.h"
+#include "Light.h"
 
 
 #include <filesystem>
@@ -12,7 +13,7 @@
 
 #ifdef _WIN32
     void clearScreen() {
-        system("cls");
+        // system("cls");
         cout << "\n";
     }
 #else
@@ -30,12 +31,6 @@ void tokenize(std::string& s, std::string& del)
         std::cout << s.substr(start, end - start) << std::endl;
     } while (end != -1);
 }
-
-
-void shapeLauncher(std::vector<std::unique_ptr<Figure>>) {
-
-}
-
 
 
 int main(int argc, char *argv[]) {
@@ -61,6 +56,7 @@ int main(int argc, char *argv[]) {
     std::string canvasOutPut = confReader.getOutputFile();
     char bgChar = confReader.getBackgroundChar();
     std::vector<std::string> canvasShapesRaw = confReader.getShapes();
+    std::vector<int> lightData = confReader.getLight();
 
     // std::cout << " Conf size: " << canvasHeight << " " << canvasWidgth << " out: " << canvasOutPut << " char:"<< bgChar<<";" << std::endl;
 
@@ -104,9 +100,13 @@ int main(int argc, char *argv[]) {
         shape->draw(canvas);
     }
 
-    canvas.draw();
-    cout << "Image saved in: " << canvasOutPut;
+    if (lightData[0] == 1) {
+        Light light(lightData[1],lightData[2], canvas);
+        light.castShadow(canvas);
+    }
+    
+    
 
-    // Należy zaimplementować metode wczytującą plik konfiguracyjny
-    // i na jego podstawie tworzyć obiekt canvas i listę figur
+    canvas.draw();
+    cout << "Image saved in: " << canvasOutPut << endl;
 }

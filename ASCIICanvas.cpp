@@ -50,16 +50,6 @@ void ASCIICanvas::draw() {
 //     figures.push_back(fig);
 // }
 
-int ASCIICanvas::setPixel(int x, int y, char c) {
-    if ((x > width || y > height) || (x<0 || y<0)) {
-        return 0;
-    }
-    if (x >= 0 && x < this->width && y >= 0 && y < this->height) {
-        this->canvas[y][x] = c;
-    }
-    return 1;
-}
-
 void ASCIICanvas::drawFrame() {
     std::cout << '|';
     for (int i = 0; i < this->width; ++i) {
@@ -79,6 +69,33 @@ void ASCIICanvas::setDimension(int widthArg, int heightArg) {
     this->width = widthArg;
     this->height = heightArg;
 };
+
+
+int ASCIICanvas::setPixel(int x, int y, char c) {
+    // if ((x > width || y > height) || (x<0 || y<0)) {
+        
+    // }
+    if (x >= 0 && x < this->width && y >= 0 && y < this->height) {
+        this->canvas[y][x] = c;
+    }else {
+        return 0;
+    }
+    return 1;
+}
+
+
+char ASCIICanvas::getPixel(int x, int y) {
+    //!! Pozniej trzeba bedzie zwracac wskaznik na char
+    char def = 1;
+    if (x >= 0 && x < this->width && y >= 0 && y < this->height) {
+        // def = this->canvas[y][x];
+        return this->canvas[y][x];
+    }else{
+        def = 0;
+        return 0;
+    }
+    return 1;
+}
 
 
 ASCIICanvas::~ASCIICanvas (){

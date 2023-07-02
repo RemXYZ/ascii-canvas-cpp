@@ -12,6 +12,7 @@
 #include <memory>
 #include <functional>
 #include "Figures/Figures.h"
+#include "Light.h"
 
 
 class ConfReader {
@@ -20,6 +21,8 @@ private:
     std::string outputFile;
     char backgroundChar;
     std::vector<std::string> shapes;
+    // lightData [*EXIST*, *X*, *Y*]
+    vector<int> lightData = {0,0,0};
 
 public:
     ConfReader(const std::string& filename) {
@@ -68,7 +71,8 @@ public:
                 } else {
                     std::cout << "No match found\n";
                 }
-            } else if (word == "SHAPE") {
+            } 
+            else if (word == "SHAPE") {
                 std::string lineShape;
                 getline(iss, lineShape);
                 if (iss.fail()) {
@@ -76,6 +80,17 @@ public:
                     return;
                 }
                 shapes.push_back(lineShape.substr(1)); // skip the space at the start
+            }
+            else if (word == "LIGHT") {
+                int x, y;
+                if (!(iss >> x >> y)) {
+                    std::cerr << "Invalid parameters for light\n";
+                    continue;
+                }
+                lightData[0] = 1;
+                lightData[1] = x;
+                lightData[2] = y;
+                
             }
         }
         fd.close();
@@ -99,6 +114,10 @@ public:
 
     std::vector<std::string> getShapes() const {
         return shapes;
+    }
+
+    vector<int> getLight() const {
+        return lightData;
     }
 };
 

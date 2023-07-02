@@ -16,10 +16,13 @@ public:
     void setDimension(int widthArg, int heightArg) override;
     void draw() override;
     // void addFigure(std::shared_ptr<Figure> fig) override;
-    int setPixel(int x, int y, char c);
     void setOutputFile(const std::string& output) {
         outputFile = output;
     }
+
+    int setPixel(int x, int y, char c);
+    char getPixel(int x, int y);
+    
 
 private:
     std::ofstream outfile; 
