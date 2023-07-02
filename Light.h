@@ -63,28 +63,8 @@ public:
             }
 
             // cout << "x: " << curx << " y: " << cury << " rad cos: " << radian  << endl;
-
-
             r++;
         }
-
-        //////
-        // for (int r = 0; r < max(c.getWidth(), c.getHeight()); r++) {
-        //     int curX = round(x + r * cos(radian));
-        //     int curY = round(y + r * sin(radian));
-
-        //     // Ensure we are within the canvas boundaries
-        //     if (curX < 0 || curX >= c.getWidth() || curY < 0 || curY >= c.getHeight()) {
-        //         break;
-        //     }
-
-        //     // If we've hit an object start drawing shadow
-        //     if (!hasHitObject && c.getPixel(curX, curY) != ' ') {
-        //         hasHitObject = true;
-        //     } else if (hasHitObject) {
-        //         c.setPixel(curX, curY, shadowSymbol);
-        //     }
-        // }
     }
 private:
     int x, y;
