@@ -10,9 +10,7 @@ Here's how to get started:
 bash
 Copy code
 
-git clone <GitHub-Repository-Link>
-
-Replace <GitHub-Repository-Link> with the actual URL of the repository.
+git clone https://github.com/RemXYZ/ascii-canvas-cpp.git
 
 ## Compilation
 
