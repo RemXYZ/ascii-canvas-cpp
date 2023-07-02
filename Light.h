@@ -55,10 +55,10 @@ public:
             if (curx < 0 || curx >= c.getWidth() || cury < 0 || cury >= c.getHeight()) {
                 break;
             }
-            if (!hasHitObject && c.getPixel(curx, cury) != ' ') {
+            if (!hasHitObject && c.getPixel(curx, cury) != c.getBGSymbol() && c.getPixel(curx, cury) != '.') {
                 hasHitObject = true;
             }
-            if (hasHitObject && c.getPixel(curx, cury) == ' ') {
+            if (hasHitObject && c.getPixel(curx, cury) == c.getBGSymbol()) {
                 c.setPixel(curx, cury, shadowSymbol);
             }
 

@@ -15,7 +15,7 @@ public:
     virtual int getHeight() {
         return height;
     }
-    virtual int getBGSymbol() {
+    virtual char getBGSymbol() {
         return bgSymbol;
     }
     // virtual void addFigure(std::shared_ptr<Figure> fig) = 0;
