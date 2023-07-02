@@ -7,7 +7,7 @@ using namespace std;
 class Light {
 public:
     Light(int x, int y, ASCIICanvas &c) : x(x), y(y) {
-        c.setPixel(x,y, '*');
+        c.setPixel(x,y, lightSymbol);
     }
     int getX() const { return x; }
     int getY() const { return y; }
@@ -55,7 +55,7 @@ public:
             if (curx < 0 || curx >= c.getWidth() || cury < 0 || cury >= c.getHeight()) {
                 break;
             }
-            if (!hasHitObject && c.getPixel(curx, cury) != c.getBGSymbol() && c.getPixel(curx, cury) != '.') {
+            if (!hasHitObject && c.getPixel(curx, cury) != c.getBGSymbol() && c.getPixel(curx, cury) != shadowSymbol) {
                 hasHitObject = true;
             }
             if (hasHitObject && c.getPixel(curx, cury) == c.getBGSymbol()) {
@@ -69,6 +69,7 @@ public:
 private:
     int x, y;
     char shadowSymbol = '.';
+    char lightSymbol = '*';
 };
 
 #endif
